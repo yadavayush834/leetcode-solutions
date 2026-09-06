@@ -1,0 +1,25 @@
+// 881. Boats to Save People
+// https://leetcode.com/problems/boats-to-save-people/
+// Difficulty: Medium | Language: cpp
+// Runtime: 19 ms
+// Memory: 45.7 MB
+// Solved: 2025-08-31
+
+class Solution {
+public:
+    int numRescueBoats(vector<int>& people, int limit) {
+        sort(people.begin(), people.end());
+        int i = 0;
+        int j = people.size() - 1;
+        int boat = 0;
+
+        while (i <= j) {
+            if (people[i] + people[j] <= limit) {
+                i++; 
+            }
+            j--; 
+            boat++;
+        }
+        return boat;
+    }
+};
