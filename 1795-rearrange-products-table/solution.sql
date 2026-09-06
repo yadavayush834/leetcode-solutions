@@ -1,0 +1,12 @@
+-- 1795. Rearrange Products Table
+-- https://leetcode.com/problems/rearrange-products-table/
+-- Difficulty: Easy | Language: mysql
+-- Runtime: 516 ms
+-- Memory: 0B
+-- Solved: 2026-04-19
+
+SELECT product_id, 'store1' AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store2', store2 FROM Products WHERE store2 IS NOT NULL
+UNION ALL
+SELECT product_id, 'store3', store3 FROM Products WHERE store3 IS NOT NULL;
