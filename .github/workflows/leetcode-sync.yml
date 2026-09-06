@@ -1,0 +1,27 @@
+name: LeetCode Sync
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 18 * * *"  # daily
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python3 sync.py --username ayushwell100
+        env:
+          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+          LEETCODE_CSRF_TOKEN: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+      - run: |
+          git config user.name "leetcode-sync"
+          git config user.email "leetcode-sync@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "sync: $(date -u +%F)"
+          git push
